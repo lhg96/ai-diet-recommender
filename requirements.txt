@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+pandas
+lightgbm
+mlflow
+dvc
+jinja2
+weasyprint
+prometheus_client
