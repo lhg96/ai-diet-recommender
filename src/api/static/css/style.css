@@ -1,0 +1,57 @@
+.hero-section {
+    padding: 120px 0;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    animation: slideBackground 25s infinite;
+    background-image: url('/static/images/back/dovile-ramoskaite-xX9SmqQCbFY-unsplash.jpg');
+    transition: background-image 1s ease-in-out;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-title {
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero-subtitle {
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero-button {
+    font-size: 1.2em !important;
+    padding: 0 2rem !important;
+}
+
+@keyframes slideBackground {
+    0% {
+        background-image: url('/static/images/back/dovile-ramoskaite-xX9SmqQCbFY-unsplash.jpg');
+    }
+    20% {
+        background-image: url('/static/images/back/brooke-lark-nTZOILVZuOg-unsplash.jpg');
+    }
+    40% {
+        background-image: url('/static/images/back/nathan-dumlao-k3DmHnnAH3M-unsplash.jpg');
+    }
+    60% {
+        background-image: url('/static/images/back/ravi-sharma-XBWjfCsQP4c-unsplash.jpg');
+    }
+    80% {
+        background-image: url('/static/images/back/rendy-syabany-cE7CeldPki0-unsplash.jpg');
+    }
+    100% {
+        background-image: url('/static/images/back/dovile-ramoskaite-xX9SmqQCbFY-unsplash.jpg');
+    }
+}

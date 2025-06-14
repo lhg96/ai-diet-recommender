@@ -1,35 +1,14 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="mdl-layout__hea<div class="mdl-grid mdl-color--white">
-    <div class="mdl-cell mdl-cell--12-col mdl-color--primary" style="padding: 32px;">
-        <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--6-col">
-                <h3 class="mdl-typography--display-1 mdl-typography--text-center mdl-color-text--white">지금 시작하세요</h3>
-                <p class="mdl-typography--body-1 mdl-color-text--white" style="margin: 16px 0;">
-                    세종시 스마트시티의 AI 기술로<br>
-                    당신만의 맞춤형 건강 식단을 만나보세요.<br>
-                    더 건강하고 행복한 라이프스타일을 시작합니다.
-                </p>
-                <div class="mdl-typography--text-center">
-                    <a href="/recommend" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">
-                        식단 추천받기
-                    </a>
-                </div>
-            </div>
-            <div class="mdl-cell mdl-cell--6-col mdl-typography--text-center">
-                <img src="/static/images/brooke-lark-jUPOXXRNdcA-unsplash.jpg" alt="건강한 식단" 
-                     class="mdl-shadow--2dp" style="max-width: 100%;">
-            </div>
-        </div>
-    </div>
-</div>r--primary-dark" style="height: 400px;">
-    <div class="mdl-grid">
+<div class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="mdl-grid hero-content">
         <div class="mdl-cell mdl-cell--12-col" style="text-align: center;">
-            <h1 class="mdl-typography--display-2 mdl-color-text--white">세종시 스마트시티 식단 추천</h1>
-            <h2 class="mdl-typography--headline mdl-color-text--white">AI가 추천하는 건강한 식단</h2>
+            <h1 class="mdl-typography--display-2 mdl-color-text--white hero-title">세종시 스마트시티 식단 추천</h1>
+            <h2 class="mdl-typography--headline mdl-color-text--white hero-subtitle">AI가 추천하는 건강한 식단</h2>
             <div style="margin: 32px 0;">
-                <a href="/recommend" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">
+                <a href="/recommend" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect hero-button">
                     지금 시작하기
                 </a>
             </div>
@@ -96,7 +75,7 @@
     </div>
 </div>
 
-<div class="mdl-grid" style="background-color: #fff; padding: 40px;">
+<div class="mdl-grid mdl-color--grey-50" style="padding: 40px;">
     <div class="mdl-cell mdl-cell--6-col">
         <h3 class="mdl-typography--display-1">지금 시작하세요</h3>
         <p class="mdl-typography--body-1" style="font-size: 1.2em; margin: 20px 0;">
@@ -109,7 +88,8 @@
         </a>
     </div>
     <div class="mdl-cell mdl-cell--6-col" style="text-align: center;">
-        <img src="static/images/brooke-lark-jUPOXXRNdcA-unsplash.jpg" alt="건강한 식단" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+        <img src="/static/images/brooke-lark-jUPOXXRNdcA-unsplash.jpg" alt="건강한 식단" 
+             style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
     </div>
 </div>
 {% endblock %}
