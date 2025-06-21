@@ -7,3 +7,6 @@ dvc
 jinja2
 weasyprint
 prometheus_client
+matplotlib
+seaborn
+numpy
