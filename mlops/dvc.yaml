@@ -1,1 +1,25 @@
-# DVC pipeline placeholder
+# DVC Pipeline Configuration
+# 
+# 이 파일은 DVC(Data Version Control) 파이프라인을 정의합니다.
+# 현재는 기본 구조만 있으며, 실제 파이프라인은 개발 예정입니다.
+#
+# TODO: 다음과 같은 단계들을 정의할 예정:
+# - data_preprocessing: 데이터 전처리
+# - model_training: 모델 학습
+# - model_evaluation: 모델 평가
+# - model_deployment: 모델 배포
+
+# stages:
+#   data_preprocessing:
+#     cmd: python src/preprocessing/preprocess.py
+#     deps:
+#       - data/raw/
+#     outs:
+#       - data/processed/
+#
+#   model_training:
+#     cmd: python src/training/train.py
+#     deps:
+#       - data/processed/
+#     outs:
+#       - models/

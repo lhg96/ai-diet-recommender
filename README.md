@@ -1,57 +1,47 @@
 # 세종시 스마트시티 AI 다이어트 식단 추천 서비스
 
+<!-- 기술 스택 뱃지 -->
+![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.115.7-green?logo=fastapi&logoColor=white)
+![Scikit-learn](https://img.shields.io/badge/Scikit--learn-1.6.1-orange?logo=scikit-learn&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-2.2.3-purple?logo=pandas&logoColor=white)
+![NumPy](https://img.shields.io/badge/NumPy-1.26.4-blue?logo=numpy&logoColor=white)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-3.10.3-red?logo=matplotlib&logoColor=white)
+![Seaborn](https://img.shields.io/badge/Seaborn-0.13.2-lightblue?logo=seaborn&logoColor=white)
+
+<!-- 개발 상태 뱃지 -->
+![Development Status](https://img.shields.io/badge/Status-In%20Development-yellow)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Platform](https://img.shields.io/badge/Platform-macOS%20|%20Linux%20|%20Windows-lightgrey)
+
+![메인 페이지](docs/screenshots/main_page.png)
+
 ## 1. 프로젝트 개요
 
 ### 프로젝트 설명
-- **명칭**: 세종시 스마트시티 헬스 데이터 기반 MLOps AI 다이어트 식단 추천 서비스
-- **목표**: 세종시 공공 데이터 (식당 정보) 활용한 개인 맞춤형 AI 식단 추천 시스템 구축
+- **명칭**: 세종시 스마트시티 헬스 데이터 기반 AI 다이어트 식단 추천 서비스 (개발 중)
+- **목표**: AI 기반 개인 맞춤형 식단 추천 시스템 구축
 
-### 핵심 가치
-- ✅ **시민 건강 개선**: 비만율 감소, 건강 식습관 유도
-- ✅ **스마트시티 활용**: 세종시 인프라(음식점, 운동시설, 보건소)와 위치 기반 연계
-- ✅ **AI 기반 자동화**: 개인 맞춤 식단 추천 및 지속적인 개선
-- ✅ **MLOps 적용**: 실시간 재학습, 성능 모니터링, 모델 실험 관리
-- ✅ **문서화 제공**: 사용자와 기관에서 활용 가능한 문서형 레시피 및 건강 리포트
+### 현재 구현 상태
+- ✅ **BMR(기초대사량) 예측 모델**: Random Forest 기반 (R² = 0.92)
+- ✅ **웹 인터페이스**: FastAPI + Material Design 기본 UI
+- ✅ **데이터 분석**: BMR 데이터셋 및 한국 식품영양 데이터 EDA
+- 🚧 **식단 추천 시스템**: 개발 예정
+- 🚧 **MLOps 파이프라인**: 기본 구조만 설정됨
 
-### 주요 기능
-1. **사용자 입력**
-   - 키, 몸무게, 성별, 목표 체중
-   - 식습관(채식/비건, 자주 먹는 음식), 활동량
-   - 지역: 세종시 내 거주지(읍/면/동 단위)
+### 구현된 머신러닝 기능
+## 🧠 현재 구현된 ML 기능
 
-2. **AI 기반 맞춤 식단 추천**
-   - 하루 3식 기준 식단 자동 구성
-   - 탄수화물, 단백질, 지방 비율 자동 계산
-   - 1일~7일 주간 식단 제공
+|기능|상태|데이터셋|알고리즘|성능|
+|---|---|---|---|---|
+|**BMR 예측**|✅ 완료|9,000개 사용자 BMR 데이터|Random Forest|R² = 0.92, RMSE = 56.22|
 
-3. **문서 생성**
-   - PDF/Excel 형식의 식단표
-   - 조리법, 재료, 칼로리 정보 포함
-   - 다운로드 링크 또는 이메일 전송
+## 📦 사용 중인 데이터셋
 
-4. **위치 기반 서비스**
-   - 추천 식단에 적합한 지역 음식점 정보
-   - 헬스장/보건소 지도 연동 및 QR코드 제공
-
-### 머신러닝 기능
-## 🧠 머신러닝이 수행하는 핵심 역할 (데이터셋 포함 상세 정리)
-
-|역할|목표|필요 데이터셋|적용 알고리즘|
+|데이터셋|내용|크기|활용 현황|
 |---|---|---|---|
-|1️⃣ **개인 맞춤 식단 추천**|사용자의 체형/목표에 따라 적합한 식단 구성|사용자 정보 (성별, 나이, 키, 체중, 활동량), 식단 이력, 식품 정보|`KNN`, `XGBoost`, `LightGBM`|
-|2️⃣ **칼로리 및 영양소 예측**|입력된 음식의 총 칼로리 및 탄단지 비율 자동 계산|식품 데이터 (USDA, Open Food Facts), 음식 구성 정보|`회귀 (Linear, Ridge)`, `Random Forest`|
-|3️⃣ **체중 변화 예측**|주어진 식단과 운동량 기준으로 체중 변화 추이 예측|일일 섭취 식단 기록, 체중 변화 로그 (MyFitnessPal 등)|`선형 회귀`, `LSTM`, `시계열 예측`|
-|4️⃣ **유사 식단/레시피 추천**|사용자의 취향과 유사한 식단 제안|레시피 데이터 (Recipe1M+, Food.com), 성분/영양소 임베딩|`Cosine similarity`, `FAISS`, `Embedding`|
-
-## 📦 데이터셋 요약 설명
-
-|데이터셋|내용|출처|활용 목적|
-|---|---|---|---|
-|**USDA FoodData Central**|음식의 열량, 탄단지, 영양소|fdc.nal.usda.gov|음식 분석 및 추천|
-|**Recipe1M+**|요리명, 재료, 조리법, 이미지|MIT CSAIL|식단 생성, 유사도 계산|
-|**Open Food Facts**|성분, 알레르기, 브랜드|openfoodfacts.org|식품 안전성, 필터링|
-|**국민건강영양조사 (KNHANES)**|체중/식습관/건강 상태|질병관리청|ML 회귀 모델 기반 평가|
-|**사용자 입력 정보**|성별, 나이, 키, 체중, 목표|자체 수집|전체 ML 전처리 기반 입력|
+|**BMR_Dataset.csv**|사용자별 나이, 체중, 키, 성별, BMR|9,000 records|✅ 모델 학습 완료|
+|**한국 식품영양성분 데이터**|식품별 영양소 정보|대용량|✅ EDA 완료, 모델 대기|
 
 
 ## 2. 기술 스택
@@ -59,34 +49,29 @@
 ### 백엔드
 - **Framework**: FastAPI
 - **AI/ML**: 
-  - LightGBM (맞춤형 식단 추천)
-  - KNN (유사 레시피 추천)
-  - TF-IDF, Cosine Similarity (레시피 유사도 계산)
+  - ✅ Random Forest (BMR 예측)
+  - 🚧 LightGBM (식단 추천 - 개발 예정)
+  - 🚧 KNN (유사 레시피 추천 - 개발 예정)
 
-### MLOps
-- **데이터 버전 관리**: DVC
-- **실험 관리**: MLflow
-- **모니터링**: Prometheus + Grafana
-- **CI/CD**: GitHub Actions
-- **컨테이너화**: Docker
+### MLOps (기본 구조만 설정)
+- **데이터 버전 관리**: 🚧 DVC (설정만 완료)
+- **실험 관리**: 🚧 MLflow (미구현)
+- **모니터링**: 🚧 Prometheus + Grafana (미구현)
 
 ### 프론트엔드
-- **UI**: Gradio
-- **문서 생성**: Jinja2 + WeasyPrint (PDF/Excel 생성)
+- **UI**: Material Design Lite
+- **템플릿 엔진**: Jinja2
 
-### 데이터 소스
-- USDA FoodData Central (영양소 정보)
-- Recipe1M+ (레시피 데이터)
-- OpenFoodFacts (식품 성분 정보)
-- 세종시 공공데이터 (위치 기반 정보)
-- 식품영양 데이터베이스 [식품의학안전처](https://various.foodsafetykorea.go.kr/nutrient/general/down/list.do)
+### 현재 사용 중인 데이터
+- BMR 데이터셋 (9,000 records)
+- 한국 식품영양성분 정보 (식품의약품안전처)
 
 ## 3. 설치 및 실행
 
 ### 환경 설정
 ```bash
 # 저장소 클론
-git clone https://github.com/your-org/sejong-diet-recommender.git
+git clone https://github.com/lhg96/sejong-diet-recommender.git
 cd sejong-diet-recommender
 
 # 가상환경 설정
@@ -97,71 +82,105 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### DVC 설정
-```bash
-# 데이터 버전 관리 초기화
-dvc init
-dvc remote add -d storage s3://your-bucket/dvc-storage
-dvc pull data/raw
-```
-
 ### 서버 실행
 ```bash
-# MLflow 서버 시작
-mlflow server \
-  --backend-store-uri sqlite:///mlflow.db \
-  --default-artifact-root ./models \
-  --host 0.0.0.0 --port 5000
-
 # FastAPI 서버 실행
 python run.py
 ```
 
-## 4. 개발 가이드
+웹 브라우저에서 `http://localhost:8000`으로 접속하여 기본 UI를 확인할 수 있습니다.
+
+## 4. 현재 구현 상태
 
 ### API 엔드포인트
-- `GET /`: 메인 페이지
-- `POST /recommend`: 식단 추천 API
-- `GET /report/{user_id}`: PDF/Excel 리포트 생성
+- ✅ `GET /`: 메인 페이지
+- 🚧 `POST /recommend`: 식단 추천 API (미구현)
+- 🚧 `GET /report/{user_id}`: 리포트 생성 (미구현)
 
-### ML 모델 개발
-1. 데이터 전처리 (`src/preprocessing/`)
-2. 모델 학습 (`src/training/`)
-3. MLflow로 실험 관리
-4. Model Registry에 등록
+### 데이터 분석
+- ✅ BMR 예측 모델 (`eda/bmr_analysis.ipynb`)
+- ✅ 한국 식품영양 데이터 EDA (`eda/koreaFDA_EDA.ipynb`)
 
-### MLOps 파이프라인
-1. GitHub Actions으로 CI/CD 구성
-2. DVC로 데이터/모델 버전 관리
-3. Prometheus/Grafana로 모니터링
+### 다음 개발 단계
+1. BMR 모델을 활용한 칼로리 계산 API 구현
+2. 식품 데이터를 활용한 기본 식단 추천 기능
+3. 사용자 입력 폼 및 결과 표시 UI 개발
 
 ## 5. 프로젝트 구조
 ```
 sejong-diet-recommender/
-├── data/                   # 데이터 관리 (DVC)
-│   ├── raw/               # 원본 데이터
-│   └── processed/         # 전처리된 데이터
-├── models/                # 학습된 모델 (MLflow)
-├── mlops/                 # MLOps 설정
-│   ├── dvc.yaml          # DVC 파이프라인
-│   ├── mlflow/           # MLflow 설정
-│   └── github-actions/   # CI/CD 워크플로우
-├── src/
-│   ├── api/              # FastAPI 서버
-│   ├── preprocessing/    # 데이터 전처리
-│   ├── training/        # 모델 학습
-│   ├── inference/       # 추론 로직
-│   └── utils/          # 유틸리티
-├── docs/                # 문서 템플릿
-└── docker/             # Docker 설정
+├── data/                   # 데이터 저장소
+│   ├── BMR_Dataset.csv    # BMR 데이터 (9,000 records)
+│   └── wellbeingfood/     # 한국 식품영양 데이터
+├── eda/                   # 데이터 분석 노트북
+│   ├── bmr_analysis.ipynb # BMR 모델 개발
+│   └── koreaFDA_EDA.ipynb # 식품 데이터 분석
+├── src/api/               # FastAPI 웹 서버
+│   ├── main.py           # 메인 서버
+│   ├── templates/        # HTML 템플릿
+│   └── static/          # CSS, 이미지
+├── models/                # 모델 저장소 (현재 비어있음)
+├── mlops/                 # MLOps 설정 (기본 구조만)
+└── run.py                # 서버 실행 스크립트
 ```
 
-## 6. 라이선스
+## 6. 스크린샷
+
+### 메인 페이지
+현재 구현된 웹 인터페이스의 모습입니다:
+
+![메인 페이지 전체](docs/screenshots/main_page.png)
+
+**주요 특징:**
+- Material Design Lite 기반의 깔끔한 UI
+- 반응형 디자인으로 다양한 화면 크기 지원
+- 현재 개발 상태를 명확히 표시 (개발 중/개발 예정)
+- 3개의 주요 기능 카드로 서비스 소개
+
+**현재 상태:**
+- ✅ **스마트 식단 추천**: BMR 모델 구현 완료, UI는 개발 중
+- 🚧 **위치 기반 서비스**: 개발 예정
+- 🚧 **맞춤형 보고서**: 개발 예정
+
+**접속 방법:**
+```bash
+# 서버 실행
+python run.py
+
+# 브라우저에서 접속
+http://localhost:8000
+```
+
+## 7. 개발 로드맵
+
+### 단기 목표 (1-2주)
+1. BMR 모델을 API로 연동
+2. 사용자 정보 입력 폼 구현
+3. 기본 칼로리 계산 기능
+
+### 중기 목표 (1개월)
+1. 식품 데이터를 활용한 간단한 식단 추천
+2. 결과 표시 UI 개선
+3. 기본적인 데이터 검증 로직
+
+### 장기 목표 (3개월+)
+1. 고도화된 식단 추천 알고리즘
+2. MLOps 파이프라인 구축
+3. 위치 기반 서비스 연동
+
+## 8. 라이선스
 MIT License
 
-## 7. 기여 방법
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
+## 📞 문의하기
+
+[![Email](https://img.shields.io/badge/Email-hyun.lim@okkorea.net-red)](mailto:hyun.lim@okkorea.net)
+[![Website](https://img.shields.io/badge/Website-okkorea.net-blue)](https://www.okkorea.net)
+
+개발 관련 컨설팅 및 외주 받습니다.
+
+프로젝트 관리자 연락처:
+- name: 임현근 (Hyun-Keun Lim)
+- Email: hyun.lim@okkorea.net
+- homepage: https://www.okkorea.net
+
+---

@@ -1,12 +1,23 @@
+# 웹 서버
 fastapi
 uvicorn
+
+# 데이터 처리 및 분석
 pandas
-lightgbm
-mlflow
-dvc
-jinja2
-weasyprint
-prometheus_client
+numpy
 matplotlib
 seaborn
-numpy
+
+# 머신러닝 (현재 사용 중)
+scikit-learn
+joblib
+
+# 웹 템플릿
+jinja2
+
+# 미래 구현 예정 (주석 처리)
+# lightgbm
+# mlflow
+# dvc
+# weasyprint
+# prometheus_client
