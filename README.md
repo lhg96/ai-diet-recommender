@@ -171,16 +171,28 @@ http://localhost:8000
 ## 8. 라이선스
 MIT License
 
+---
+
 ## 📞 문의하기
 
-[![Email](https://img.shields.io/badge/Email-hyun.lim@okkorea.net-red)](mailto:hyun.lim@okkorea.net)
-[![Website](https://img.shields.io/badge/Website-okkorea.net-blue)](https://www.okkorea.net)
+**개발 관련 컨설팅 및 외주 받습니다.**
 
-개발 관련 컨설팅 및 외주 받습니다.
+**프로젝트 관리자 연락처:**
 
-프로젝트 관리자 연락처:
-- name: 임현근 (Hyun-Keun Lim)
-- Email: hyun.lim@okkorea.net
-- homepage: https://www.okkorea.net
+- **Name**: 임현근 (Hyun-Keun Lim)
+- **Email**: [hyun.lim@okkorea.net](mailto:hyun.lim@okkorea.net)
+- **Homepage**: [https://www.okkorea.net](https://www.okkorea.net)
 
----
+### 🛠️ 전문 분야
+
+- **IoT 시스템 설계 및 개발**
+- **임베디드 소프트웨어 개발** (Arduino, ESP32)
+- **AI 서비스 개발** (LLM, MCP Agent)
+- **클라우드 서비스 구축** (Google Cloud Platform)
+- **하드웨어 프로토타이핑**
+
+### 💼 서비스
+
+- **기술 컨설팅**: IoT 프로젝트 기획 및 설계 자문
+- **개발 외주**: 펌웨어부터 클라우드까지 Full-stack 개발
+- **교육 서비스**: 임베디드/IoT 개발 교육 및 멘토링
