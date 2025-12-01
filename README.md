@@ -179,7 +179,6 @@ MIT License
 
 **프로젝트 관리자 연락처:**
 
-- **Name**: 임현근 (Hyun-Keun Lim)
 - **Email**: [hyun.lim@okkorea.net](mailto:hyun.lim@okkorea.net)
 - **Homepage**: [https://www.okkorea.net](https://www.okkorea.net)
 
