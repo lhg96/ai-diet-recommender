@@ -1,25 +1,40 @@
-# DVC Pipeline Configuration
-# 
-# 이 파일은 DVC(Data Version Control) 파이프라인을 정의합니다.
-# 현재는 기본 구조만 있으며, 실제 파이프라인은 개발 예정입니다.
+# DVC Pipeline Configuration — 통합본 (2026-08-12 활성화)
 #
-# TODO: 다음과 같은 단계들을 정의할 예정:
-# - data_preprocessing: 데이터 전처리
-# - model_training: 모델 학습
-# - model_evaluation: 모델 평가
-# - model_deployment: 모델 배포
+# 데이터 버전 관리 + 재학습 파이프라인.
+# 설치:  pip install dvc
+# 실행:  dvc repro            # 파이프라인 전체 실행
+#        dvc push             # 원격 저장소로 모델/데이터 업로드 (원격 설정 후)
+# 주의:  BMR 모델 파일(65MB)은 .gitignore 예외로 git에도 커밋되어 있으므로,
+#        DVC 없이도 `python mlops/train_bmr.py` 단독 실행 가능.
 
-# stages:
-#   data_preprocessing:
-#     cmd: python src/preprocessing/preprocess.py
-#     deps:
-#       - data/raw/
-#     outs:
-#       - data/processed/
-#
-#   model_training:
-#     cmd: python src/training/train.py
-#     deps:
-#       - data/processed/
-#     outs:
-#       - models/
+stages:
+  data_preparation:
+    cmd: python mlops/prepare_korean_data.py
+    deps:
+      - mlops/prepare_korean_data.py
+    outs:
+      - data/korean_food_data.csv
+
+  train_bmr:
+    cmd: python mlops/train_bmr.py
+    deps:
+      - data/BMR_Dataset.csv
+      - mlops/train_bmr.py
+    outs:
+      - models/bmr_rf_model.joblib
+      - models/bmr_scaler.joblib
+      - models/bmr_gender_encoder.joblib
+    metrics:
+      - models/bmr_metrics.json:
+          cache: false
+
+  train_classifier:
+    cmd: python mlops/train_classifier.py
+    deps:
+      - data/korean_food_data.csv
+      - mlops/train_classifier.py
+    outs:
+      - models/food_model.pickle
+    metrics:
+      - models/classifier_metrics.json:
+          cache: false

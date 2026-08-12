@@ -5,13 +5,15 @@
     <div class="hero-overlay"></div>
     <div class="mdl-grid hero-content">
         <div class="mdl-cell mdl-cell--12-col" style="text-align: center;">
-            <h1 class="mdl-typography--display-2 mdl-color-text--white hero-title">세종시 스마트시티 식단 추천</h1>
-            <h2 class="mdl-typography--headline mdl-color-text--white hero-subtitle">AI가 추천하는 건강한 식단</h2>
+            <h1 class="mdl-typography--display-2 mdl-color-text--white hero-title">AI Diet Recommender</h1>
+            <h2 class="mdl-typography--headline mdl-color-text--white hero-subtitle">BMR 기반 개인 맞춤 · 한국 음식 데이터 식단 추천</h2>
             <div style="margin: 32px 0;">
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect hero-button" disabled>
-                    개발 중
-                </button>
-                <p style="color: white; margin-top: 16px; font-size: 14px;">식단 추천 기능은 현재 개발 중입니다</p>
+                <a href="/recommend" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect hero-button">
+                    식단 추천 받기
+                </a>
+                <a href="/search" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect hero-button" style="background:#fff;color:#00897b;margin-left:12px;">
+                    식품 데이터 검색
+                </a>
             </div>
         </div>
     </div>
@@ -27,12 +29,13 @@
                 </h2>
             </div>
             <div class="mdl-card__supporting-text">
-                BMR(기초대사량) 예측 모델이 구현되어 있습니다. 식단 추천 기능은 개발 중입니다.
+                BMR(기초대사량) 예측 모델 기반으로 하루 권장 칼로리를 계산하고,
+                목적별(감량/근육/증량)·영양 필터(채식/철분/칼슘)로 한국 식단을 추천합니다.
             </div>
             <div class="mdl-card__actions mdl-card--border">
-                <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" disabled>
-                    개발 중
-                </button>
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/recommend">
+                    추천 시작하기
+                </a>
             </div>
         </div>
     </div>
@@ -41,17 +44,18 @@
         <div class="mdl-card mdl-shadow--2dp" style="width: 100%;">
             <div class="mdl-card__title mdl-card--expand mdl-color--teal">
                 <h2 class="mdl-card__title-text mdl-color-text--white">
-                    <i class="material-icons">location_on</i>
-                    위치 기반 서비스
+                    <i class="material-icons">search</i>
+                    식품 데이터 검색
                 </h2>
             </div>
             <div class="mdl-card__supporting-text">
-                위치 기반 서비스는 향후 개발 예정입니다. 현재는 기본적인 데이터 분석 기능만 구현되어 있습니다.
+                식약처 기반 한국 식품 영양성분 데이터({{ food_count }}개)를
+                음식명 검색과 영양소 정렬로 확인할 수 있습니다.
             </div>
             <div class="mdl-card__actions mdl-card--border">
-                <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" disabled>
-                    개발 예정
-                </button>
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/search">
+                    검색하러 가기
+                </a>
             </div>
         </div>
     </div>
@@ -60,17 +64,13 @@
         <div class="mdl-card mdl-shadow--2dp" style="width: 100%;">
             <div class="mdl-card__title mdl-card--expand mdl-color--teal">
                 <h2 class="mdl-card__title-text mdl-color-text--white">
-                    <i class="material-icons">description</i>
-                    맞춤형 보고서
+                    <i class="material-icons">memory</i>
+                    AI 모델 상태
                 </h2>
             </div>
             <div class="mdl-card__supporting-text">
-                보고서 생성 기능은 개발 예정입니다. 현재는 BMR 예측 모델과 기본 웹 인터페이스만 구현되어 있습니다.
-            </div>
-            <div class="mdl-card__actions mdl-card--border">
-                <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" disabled>
-                    개발 예정
-                </button>
+                BMR 예측 모델(RandomForest, R²=0.92) {% if bmr_ready %}✅ 로드됨{% else %}❌ 미로드 — `python mlops/train_bmr.py` 실행{% endif %}
+                <br>식단 분류 모델: `python mlops/train_classifier.py` 로 재학습
             </div>
         </div>
     </div>
@@ -80,18 +80,17 @@
     <div class="mdl-cell mdl-cell--6-col">
         <h3 class="mdl-typography--display-1">지금 시작하세요</h3>
         <p class="mdl-typography--body-1" style="font-size: 1.2em; margin: 20px 0;">
-            세종시 스마트시티의 AI 기술로<br>
-            당신만의 맞춤형 건강 식단을 만나보세요.<br>
+            나이·체중·키·성별·목표를 입력하면<br>
+            AI가 당신만의 맞춤 식단을 짜드립니다.<br>
             더 건강하고 행복한 라이프스타일을 시작합니다.
         </p>
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" disabled>
-            개발 중
-        </button>
+        <a href="/recommend" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+            식단 추천 받기
+        </a>
     </div>
     <div class="mdl-cell mdl-cell--6-col" style="text-align: center;">
-        <img src="/static/images/brooke-lark-jUPOXXRNdcA-unsplash.jpg" alt="건강한 식단" 
+        <img src="/static/images/brooke-lark-jUPOXXRNdcA-unsplash.jpg" alt="건강한 식단"
              style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
     </div>
 </div>
 {% endblock %}
-

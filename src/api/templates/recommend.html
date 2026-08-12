@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Diet Recommender — 개인 맞춤 식단 추천</title>
+  <style>
+    :root {
+      --accent: #3fb074;
+      --accent-light: #d4f3e3;
+      --card-bg: rgba(255, 255, 255, 0.92);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: "Noto Sans KR", Arial, sans-serif;
+      background: linear-gradient(160deg, #e8f5ec, #f7fbf8);
+      margin: 0;
+      min-height: 100vh;
+      color: #0c2e19;
+    }
+
+    header {
+      background: var(--accent);
+      color: #fff;
+      text-align: center;
+      padding: 2rem 1rem;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1rem 3rem;
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .prediction-form label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+    }
+
+    .prediction-form input[type="number"],
+    .prediction-form select {
+      width: 100%;
+      padding: 0.7rem;
+      border-radius: 8px;
+      border: 1px solid #b7d8c5;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      background: #fff;
+    }
+
+    .row-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 1rem;
+    }
+
+    @media (max-width: 640px) {
+      .row-2col { grid-template-columns: 1fr; }
+    }
+
+    button, .btn {
+      border: none;
+      border-radius: 999px;
+      padding: 0.75rem 1.6rem;
+      font-size: 1rem;
+      background: var(--accent);
+      color: #fff;
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover, .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(63, 176, 116, 0.35);
+    }
+
+    .message {
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      font-weight: 600;
+    }
+
+    .message.success { background: var(--accent-light); color: #0c3b29; }
+    .message.error { background: #ffe0d9; color: #821919; }
+
+    .filter-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .filter-options label {
+      background: #eef6f0;
+      border-radius: 999px;
+      padding: 0.4rem 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .food-list {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      padding: 0;
+      list-style: none;
+      margin: 0;
+    }
+
+    .food-card {
+      border: 1px solid #e1efe5;
+      border-radius: 14px;
+      padding: 1rem;
+      background: #fff;
+    }
+
+    .food-card h3 { margin-top: 0; }
+
+    .placeholder { color: #4d6b58; font-style: italic; }
+
+    .actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 1rem;
+    }
+
+    a.btn { text-decoration: none; text-align: center; display: inline-block; }
+
+    .bmr-result {
+      background: #eef9f1;
+      border: 1px solid #c8e8d2;
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .bmr-result strong { color: #1b6e3a; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AI Diet Recommender</h1>
+    <p>BMR 기반 개인 맞춤 + 한국 음식 데이터로 목적별 식단을 추천합니다.</p>
+  </header>
+
+  <main>
+    {% if error %}
+      <div class="message error">{{ error }}</div>
+    {% elif success and result %}
+      <div class="message success">{{ result }}</div>
+    {% endif %}
+
+    <section class="card prediction-form">
+      <h2>🧬 BMR 계산 — 내 하루 권장 칼로리</h2>
+      <form action="/api/calculate-bmr" method="post" id="bmr-form">
+        <div class="row-2col">
+          <div>
+            <label for="age">나이</label>
+            <input type="number" id="age" name="age" min="1" max="120" step="1" required value="30">
+          </div>
+          <div>
+            <label for="gender">성별</label>
+            <select id="gender" name="gender">
+              <option value="Male">남성</option>
+              <option value="Female">여성</option>
+            </select>
+          </div>
+          <div>
+            <label for="weight">체중 (kg)</label>
+            <input type="number" id="weight" name="weight" min="1" step="0.1" required value="70">
+          </div>
+          <div>
+            <label for="height">키 (cm)</label>
+            <input type="number" id="height" name="height" min="1" step="0.1" required value="170">
+          </div>
+          <div>
+            <label for="activity">활동 수준</label>
+            <select id="activity" name="activity">
+              <option value="sedentary">거의 없음 (사무직)</option>
+              <option value="light" selected>가벼운 활동 (주 1~3회)</option>
+              <option value="moderate">보통 활동 (주 3~5회)</option>
+              <option value="active">활발한 활동 (주 6~7회)</option>
+            </select>
+          </div>
+          <div>
+            <label for="goal">목표</label>
+            <select id="goal" name="goal">
+              <option value="weightloss" selected>체중 감량 (-20%)</option>
+              <option value="musclegain">근육 증가 (유지)</option>
+              <option value="weightgain">체중 증량 (+15%)</option>
+            </select>
+          </div>
+        </div>
+        <div class="actions">
+          <button type="submit">BMR 계산</button>
+        </div>
+      </form>
+      <div id="bmr-result" class="bmr-result" style="display:none;"></div>
+    </section>
+
+    <section class="card">
+      <h2>🤖 식단 유형 예측 (분류 모델)</h2>
+      <form action="/predict" method="post">
+        <div class="row-2col">
+          <div>
+            <label for="input_1">칼로리 (kcal)</label>
+            <input type="number" id="input_1" name="calories" min="0" step="0.01" required value="500">
+          </div>
+          <div>
+            <label for="input_2">단백질 (g)</label>
+            <input type="number" id="input_2" name="protein" min="0" step="0.01" required value="30">
+          </div>
+          <div>
+            <label for="input_3">식이섬유 (g)</label>
+            <input type="number" id="input_3" name="fiber" min="0" step="0.01" required value="8">
+          </div>
+        </div>
+        <div class="actions">
+          <button type="submit">예측</button>
+          <a class="btn" href="/search">한국 식품 데이터 검색</a>
+        </div>
+      </form>
+    </section>
+
+    {% macro diet_block(title, endpoint, goal_key, foods, empty_text) %}
+      <section class="card">
+        <h2>{{ title }}</h2>
+        <p>필요한 영양소 필터를 선택한 뒤 추천 버튼을 눌러보세요.</p>
+        <form action="{{ endpoint }}" method="post">
+          <input type="hidden" name="goal" value="{{ goal_key }}">
+          <div class="filter-options">
+            <label><input type="checkbox" name="vegetarian" value="vegetarian">채식</label>
+            <label><input type="checkbox" name="iron" value="iron">철분 강화 (&gt;6mg)</label>
+            <label><input type="checkbox" name="calcium" value="calcium">칼슘 강화 (&gt;150mg)</label>
+            <label><input type="checkbox" name="anyfoods" value="anyfoods">제한 없음</label>
+          </div>
+          <button type="submit">추천 받기</button>
+        </form>
+
+        {% if foods %}
+          <h3>추천 식품</h3>
+          <ul class="food-list">
+            {% for food in foods %}
+              <li class="food-card">
+                <h3>{{ food.name }}</h3>
+                <p>{{ food.calories }} · 단백질 {{ food.protein }}</p>
+                <p>철분 {{ food.iron }} · 칼슘 {{ food.calcium }}</p>
+                <p>식이섬유 {{ food.fiber }}</p>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="placeholder">{{ empty_text }}</p>
+        {% endif %}
+      </section>
+    {% endmacro %}
+
+    {{ diet_block("💪 근육 증가 (Muscle Gain) 추천", "/recommend", "musclegain", musclegainfoods, "필터를 선택하고 추천 버튼을 눌러 결과를 확인하세요.") }}
+    {{ diet_block("⚖️ 체중 증량 (Weight Gain) 추천", "/recommend", "weightgain", weightgainfoods, "필터를 지정하면 최대 5개의 식품을 보여줍니다.") }}
+    {{ diet_block("🔥 체중 감량 (Weight Loss) 추천", "/recommend", "weightloss", weightlossfoods, "체중 감량 목표에 맞는 식품을 찾아보세요.") }}
+  </main>
+
+  <script>
+    // BMR 계산 결과를 AJAX로 표시 (페이지 이동 없이)
+    document.getElementById("bmr-form").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const form = e.target;
+      const res = await fetch(form.action, { method: "POST", body: new FormData(form) });
+      const data = await res.json();
+      const box = document.getElementById("bmr-result");
+      box.style.display = "block";
+      if (data.error) {
+        box.innerHTML = "⚠️ " + data.error;
+        box.style.borderColor = "#f0a8a0";
+      } else {
+        box.innerHTML =
+          "🔥 <strong>BMR(기초대사량):</strong> " + data.bmr + " kcal<br>" +
+          "🏃 <strong>TDEE(활동 반영):</strong> " + data.tdee + " kcal (활동계수 " + data.activity_factor + ")<br>" +
+          "🎯 <strong>목표 칼로리:</strong> " + data.goal_calories + " kcal";
+      }
+    });
+  </script>
+</body>
+</html>

@@ -8,16 +8,13 @@ numpy
 matplotlib
 seaborn
 
-# 머신러닝 (현재 사용 중)
+# 머신러닝
 scikit-learn
 joblib
 
 # 웹 템플릿
 jinja2
+python-multipart
 
-# 미래 구현 예정 (주석 처리)
-# lightgbm
-# mlflow
+# MLOps (선택 — 파이프라인 실행 시)
 # dvc
-# weasyprint
-# prometheus_client

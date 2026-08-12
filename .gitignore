@@ -40,6 +40,12 @@ venv.bak/
 # MLOps
 /models/*
 !/models/.gitkeep
+# 통합본: 모델 파일은 git 커밋 (nutriwise의 food_model.pickle 누락 문제 재발 방지)
+!/models/bmr_rf_model.joblib
+!/models/bmr_scaler.joblib
+!/models/bmr_gender_encoder.joblib
+!/models/food_model.pickle
+!/models/*.json
 mlruns/
 mlflow.db
 .dvc/
